@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace CarBook.Domain.Entities
 {
-    public class Banner
+    public class Service
     {
-        public int BannerId { get; set; }
+        public int ServiceId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string VideoDescription { get; set; }
-        public string VideoUrl { get; set; }
-        
+        public string IconUrl { get; set; }
     }
 }
