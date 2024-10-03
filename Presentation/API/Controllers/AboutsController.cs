@@ -33,7 +33,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> AboutList()
         {
-            var values = _getAboutQueryHandler.Handle();
+            var values = await _getAboutQueryHandler.Handle();
             return Ok(values);
         }
 
