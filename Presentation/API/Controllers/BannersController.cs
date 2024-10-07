@@ -1,4 +1,6 @@
-﻿using CarBook.Application.Features.CQRS.Handlers.BannerHandlers;
+﻿using CarBook.Application.Features.CQRS.Commands.BannerCommands;
+using CarBook.Application.Features.CQRS.Handlers.BannerHandlers;
+using CarBook.Application.Features.CQRS.Queries.BannerQueries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,7 +36,33 @@ namespace API.Controllers
             return Ok(values);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBanner(int id)
+        {
+            var value = _getBannerByIdQueryHandler.Handle(new GetBannerByIdQuery(id));
+            return Ok(value);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateBanner(CreateBannerCommand command)
+        {
+            await _createBannerCommandHandler.Handle(command);
+            return Ok("Banner added");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateBanner(UpdateBannerCommand command)
+        {
+            await _updateBannerCommandHandler.Handle(command);
+            return Ok($"Barner Id with {command.BannerId} has been updated");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteBanner(int id)
+        {
+            await _removeBannerCommandHandler.Handle(new RemoveBannerCommand(id));
+            return Ok($"About with {id} has been deleted");
+        }
 
 
     }
