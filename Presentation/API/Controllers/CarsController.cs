@@ -33,35 +33,35 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> BrandsList()
+        public async Task<IActionResult> CarsList()
         {
             var values = await _getCarQueryHandler.Handle();
             return Ok(values);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBrand(int id)
+        public async Task<IActionResult> GetCar(int id)
         {
             var value = _getCarByIdQueryHandler.Handle(new GetCarByIdQuery(id));
             return Ok(value);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBrand(CreateCarCommand command)
+        public async Task<IActionResult> CreateCar(CreateCarCommand command)
         {
             await _createCarCommandHandler.Handle(command);
             return Ok("Brand added");
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBanner(UpdateCarCommand command)
+        public async Task<IActionResult> UpdateCar(UpdateCarCommand command)
         {
             await _updateCarCommandHandler.Handle(command);
             return Ok($"Brand Id with {command.BrandId} has been updated");
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteBanner(int id)
+        public async Task<IActionResult> DeleteCar(int id)
         {
             await _removeCarCommandHandler.Handle(new RemoveCarCommand(id));
             return Ok($"Brand with {id} has been deleted");
