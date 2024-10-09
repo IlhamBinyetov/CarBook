@@ -15,18 +15,21 @@ namespace API.Controllers
         private readonly CreateCarCommandHandler _createCarCommandHandler;
         private readonly UpdateCarCommandHandler _updateCarCommandHandler;
         private readonly RemoveCarCommandHandler _removeCarCommandHandler;
+        private readonly GetCarWithBrandQueryHandler _getCarWithBrandQueryHandler;
 
         public CarsController(GetCarByIdQueryHandler getCarByIdQueryHandler, 
                               GetCarQueryHandler getCarQueryHandler, 
                               CreateCarCommandHandler createCarCommandHandler, 
                               UpdateCarCommandHandler updateCarCommandHandler, 
-                              RemoveCarCommandHandler removeCarCommandHandler)
+                              RemoveCarCommandHandler removeCarCommandHandler,
+                              GetCarWithBrandQueryHandler getCarWithBrandQueryHandler)
         {
             _getCarByIdQueryHandler = getCarByIdQueryHandler;
             _getCarQueryHandler = getCarQueryHandler;
             _createCarCommandHandler = createCarCommandHandler;
             _updateCarCommandHandler = updateCarCommandHandler;
             _removeCarCommandHandler = removeCarCommandHandler;
+            _getCarWithBrandQueryHandler = getCarWithBrandQueryHandler;
         }
 
         [HttpGet]
@@ -62,6 +65,13 @@ namespace API.Controllers
         {
             await _removeCarCommandHandler.Handle(new RemoveCarCommand(id));
             return Ok($"Brand with {id} has been deleted");
+        }
+
+        [HttpGet("GetCarWithBrand")]
+        public  IActionResult GetCarWithBrand()
+        {
+            var values = _getCarWithBrandQueryHandler.Handle();
+            return Ok(values);
         }
     }
 }

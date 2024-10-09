@@ -52,6 +52,7 @@ namespace CarBook.Application.Extensions
             services.AddScoped<CreateCarCommandHandler>();
             services.AddScoped<UpdateCarCommandHandler>();
             services.AddScoped<RemoveCarCommandHandler>();
+            services.AddScoped<GetCarWithBrandQueryHandler>();
 
             return services;
         }
