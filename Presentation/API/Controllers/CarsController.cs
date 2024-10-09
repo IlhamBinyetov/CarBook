@@ -50,21 +50,21 @@ namespace API.Controllers
         public async Task<IActionResult> CreateCar(CreateCarCommand command)
         {
             await _createCarCommandHandler.Handle(command);
-            return Ok("Brand added");
+            return Ok("Car added");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateCar(UpdateCarCommand command)
         {
             await _updateCarCommandHandler.Handle(command);
-            return Ok($"Brand Id with {command.BrandId} has been updated");
+            return Ok($"Car Id with {command.BrandId} has been updated");
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteCar(int id)
         {
             await _removeCarCommandHandler.Handle(new RemoveCarCommand(id));
-            return Ok($"Brand with {id} has been deleted");
+            return Ok($"Car with {id} has been deleted");
         }
 
         [HttpGet("GetCarWithBrand")]

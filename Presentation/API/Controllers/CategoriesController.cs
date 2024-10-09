@@ -47,21 +47,21 @@ namespace API.Controllers
         public async Task<IActionResult> CreateCategory(CreateCategoryCommand command)
         {
             await _createCategoryCommandHandler.Handle(command);
-            return Ok("Brand added");
+            return Ok("Category added");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
         {
             await _updateCategoryCommandHandler.Handle(command);
-            return Ok($"Brand Id with {command.CategoryId} has been updated");
+            return Ok($"Category Id with {command.CategoryId} has been updated");
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             await _removeCategoryCommandHandler.Handle(new RemoveCategoryCommand(id));
-            return Ok($"Brand with {id} has been deleted");
+            return Ok($"Category with {id} has been deleted");
         }
 
   
