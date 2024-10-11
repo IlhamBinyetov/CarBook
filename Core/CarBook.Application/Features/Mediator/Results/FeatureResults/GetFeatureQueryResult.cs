@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Features.CQRS.Results.BrandResults
+namespace CarBook.Application.Features.Mediator.Results.FeatureResults
 {
-    public class GetBrandIdQueryResult
+    public class GetFeatureQueryResult
     {
-        public int BrandId { get; set; }
+        public int FeatureId { get; set; }
         public string Name { get; set; }
     }
-    
 }
