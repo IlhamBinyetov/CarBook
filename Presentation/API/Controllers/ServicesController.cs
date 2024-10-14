@@ -39,7 +39,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateService(UpdateerviceCommand command)
+        public async Task<IActionResult> UpdateService(UpdateServiceCommand command)
         {
             await _mediator.Send(command);
             return Ok("Service Updated Successfully");
