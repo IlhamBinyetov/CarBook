@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.Mediator.Handlers.ServiceHandlers
 {
-    public class UpdateServiceCommandHandler : IRequestHandler<UpdateSocialMediaCommand>
+    public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand>
     {
         private readonly IRepository<Service> _repository;
 
@@ -18,10 +18,10 @@ namespace CarBook.Application.Features.Mediator.Handlers.ServiceHandlers
         {
             _repository = repository;
         }
-        public async Task Handle(UpdateSocialMediaCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateServiceCommand request, CancellationToken cancellationToken)
         {
             var updatedItem = await _repository.GetByIdAsync(request.ServiceId);
-           updatedItem.ServiceId = request.ServiceId;
+            updatedItem.ServiceId = request.ServiceId;
             updatedItem.Title = request.Title;
             updatedItem.Description = request.Description;
             updatedItem.IconUrl = request.IconUrl;

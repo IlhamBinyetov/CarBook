@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.Mediator.Handlers.ServiceHandlers
 {
-    public class RemoveServiceCommandHandler : IRequestHandler<RemoveSocialMediaCommand>
+    public class RemoveServiceCommandHandler : IRequestHandler<RemoveServiceCommand>
     {
         private readonly IRepository<Service> _repository;
 
@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.Mediator.Handlers.ServiceHandlers
         {
             _repository = repository;
         }
-        public async Task Handle(RemoveSocialMediaCommand request, CancellationToken cancellationToken)
+        public async Task Handle(RemoveServiceCommand request, CancellationToken cancellationToken)
         {
             var deletedItem = await _repository.GetByIdAsync(request.Id);
             await _repository.RemoveAsync(deletedItem);
