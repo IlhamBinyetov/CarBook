@@ -22,10 +22,9 @@ namespace CarBook.Application.Features.Mediator.Handlers.ServiceHandlers
         {
             await _repository.CreateAsync(new Service
             {
-               Title = request.Title,
-               IconUrl = request.IconUrl,
-               Description = request.Description,
-                
+                IconUrl = request.IconUrl,
+                Title = request.Title,
+                Description = request.Description,
             });
         }
     }

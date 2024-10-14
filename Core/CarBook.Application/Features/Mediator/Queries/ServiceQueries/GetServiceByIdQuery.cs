@@ -10,11 +10,12 @@ namespace CarBook.Application.Features.Mediator.Queries.ServiceQueries
 {
     public class GetServiceByIdQuery : IRequest<GetServiceByIdQueryResult>
     {
-        public GetServiceByIdQuery(int id)
+        public GetServiceByIdQuery(int ıd)
         {
-            Id = id;
+            Id = ıd;
         }
 
         public int Id { get; set; }
+
     }
 }

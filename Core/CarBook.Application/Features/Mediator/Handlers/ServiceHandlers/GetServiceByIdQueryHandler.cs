@@ -1,5 +1,4 @@
 ﻿using CarBook.Application.Features.Mediator.Queries.ServiceQueries;
-using CarBook.Application.Features.Mediator.Results.PricingResults;
 using CarBook.Application.Features.Mediator.Results.ServiceResults;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;

@@ -1,4 +1,4 @@
-﻿using CarBook.Application.Features.Mediator.Commands.ServiceCommands;
+﻿using CarBook.Application.Features.Mediator.Commands.SocialMediaCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -8,13 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Features.Mediator.Handlers.ServiceHandlers
+namespace CarBook.Application.Features.Mediator.Handlers.SocialMediaHandlers
 {
-    public class RemoveServiceCommandHandler : IRequestHandler<RemoveSocialMediaCommand>
+    public class RemoveSocialMediaCommandHandler : IRequestHandler<RemoveSocialMediaCommand>
     {
-        private readonly IRepository<Service> _repository;
+        private readonly IRepository<SocialMedia> _repository;
 
-        public RemoveServiceCommandHandler(IRepository<Service> repository)
+        public RemoveSocialMediaCommandHandler(IRepository<SocialMedia> repository)
         {
             _repository = repository;
         }
