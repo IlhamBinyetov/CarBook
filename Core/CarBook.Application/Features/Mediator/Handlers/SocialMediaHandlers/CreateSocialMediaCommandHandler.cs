@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.SocialMediaCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,20 @@ namespace CarBook.Application.Features.Mediator.Handlers.SocialMediaHandlers
 {
     public class CreateSocialMediaCommandHandler : IRequestHandler<CreateSocialMediaCommand>
     {
-        private readonly IRepository<SocialMedia> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateSocialMediaCommandHandler(IRepository<SocialMedia> repository)
+        public CreateSocialMediaCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public async Task Handle(CreateSocialMediaCommand request, CancellationToken cancellationToken)
         {
-            await _repository.CreateAsync(new SocialMedia
+            var socialMedia =  _unitOfWork.Repository<SocialMedia>().Query().FirstOrDefault(x=>x.Name == request.Name);
+            await _unitOfWork.Repository<SocialMedia>().CreateAsync(new SocialMedia
             {
               Icon = request.Icon,
               Name = request.Name,
               Url = request.Url,
-                
             });
         }
     }

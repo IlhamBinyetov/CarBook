@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.SocialMediaCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,17 @@ namespace CarBook.Application.Features.Mediator.Handlers.SocialMediaHandlers
 {
     public class RemoveSocialMediaCommandHandler : IRequestHandler<RemoveSocialMediaCommand>
     {
-        private readonly IRepository<SocialMedia> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RemoveSocialMediaCommandHandler(IRepository<SocialMedia> repository)
+        public RemoveSocialMediaCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public async Task Handle(RemoveSocialMediaCommand request, CancellationToken cancellationToken)
         {
-            var deletedItem = await _repository.GetByIdAsync(request.Id);
-            await _repository.RemoveAsync(deletedItem);
+            var deletedItem = await _unitOfWork.Repository<SocialMedia>().GetByIdAsync(request.Id);
+            await _unitOfWork.Repository<SocialMedia>().RemoveAsync(deletedItem);
+            _unitOfWork.Commit();
         }
     }
 }
