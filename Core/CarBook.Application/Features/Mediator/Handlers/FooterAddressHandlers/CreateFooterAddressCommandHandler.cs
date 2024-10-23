@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.FooterAddresCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,22 +13,25 @@ namespace CarBook.Application.Features.Mediator.Handlers.FooterAddressHandlers
 {
     public class CreateFooterAddressCommandHandler : IRequestHandler<CreateFooterAddressCommand>
     {
-        private readonly IRepository<FooterAddress> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateFooterAddressCommandHandler(IRepository<FooterAddress> repository)
+        public CreateFooterAddressCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(CreateFooterAddressCommand request, CancellationToken cancellationToken)
         {
-            await _repository.CreateAsync(new FooterAddress
+            var footerAddress = _unitOfWork.Repository<FooterAddress>().Query().FirstOrDefault(x => x.Email == request.Email);
+
+            await _unitOfWork.Repository<FooterAddress>().CreateAsync(new FooterAddress
             {
                 Address = request.Address,
                 Description = request.Description,
                 Email = request.Email,
                 Phone = request.Phone
             });
+            _unitOfWork.Commit();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.FeatureCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,24 @@ namespace CarBook.Application.Features.Mediator.Handlers.FeatureHandlers
 {
     public class CreateFeatureCommandHandler : IRequestHandler<CreateFeatureCommand>
     {
-        private readonly IRepository<Feature> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateFeatureCommandHandler(IRepository<Feature> repository)
+        public CreateFeatureCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(CreateFeatureCommand request, CancellationToken cancellationToken)
         {
-            await _repository.CreateAsync(new Feature
+            var feature =  _unitOfWork.Repository<Feature>().Query().FirstOrDefault(x=>x.Name == request.Name);
+           
+
+            await _unitOfWork.Repository<Feature>().CreateAsync(new Feature
             {
                 Name = request.Name
             });
+            _unitOfWork.Commit();
+
         }
     }
 }

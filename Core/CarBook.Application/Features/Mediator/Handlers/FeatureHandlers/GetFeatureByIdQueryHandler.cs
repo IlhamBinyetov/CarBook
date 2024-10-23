@@ -2,6 +2,7 @@
 using CarBook.Application.Features.Mediator.Results.FeatureResults;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,16 @@ namespace CarBook.Application.Features.Mediator.Handlers.FeatureHandlers
 {
     public class GetFeatureByIdQueryHandler : IRequestHandler<GetFeatureByIdQuery, GetFeatureByIdQueryResult>
     {
-        private readonly IRepository<Feature> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetFeatureByIdQueryHandler(IRepository<Feature> repository)
+        public GetFeatureByIdQueryHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<GetFeatureByIdQueryResult> Handle(GetFeatureByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _repository.GetByIdAsync(request.Id);
+            var result = await _unitOfWork.Repository<Feature>().GetByIdAsync(request.Id);
             return new GetFeatureByIdQueryResult
             {
                 FeatureId = result.FeatureId,

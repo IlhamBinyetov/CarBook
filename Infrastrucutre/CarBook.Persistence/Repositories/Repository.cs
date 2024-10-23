@@ -12,38 +12,43 @@ namespace CarBook.Persistence.Repositories
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly CarBookContext _context;
+        private readonly DbSet<T> _dbSet;
 
         public Repository(CarBookContext context)
         {
             _context = context;
+            _dbSet = context.Set<T>();
         }
 
-        public async Task CreateAsync(T entity)
+        public  async Task CreateAsync(T entity)
         {
-            _context.Set<T>().Add(entity);
-           await _context.SaveChangesAsync();
+           await _dbSet.AddAsync(entity);
+           
         }
 
         public async Task<List<T>> GetAllAsync()
         {
-            return await _context.Set<T>().ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _dbSet.FindAsync(id);
+        }
+
+        public IQueryable<T> Query()
+        {
+            return _dbSet;
         }
 
         public async Task RemoveAsync(T entity)
         {
-            _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
+            _dbSet.Remove(entity);
         }
 
         public async Task UpdateAsync(T entity)
         {
-            _context.Set<T>().Update(entity);
-            await _context.SaveChangesAsync();
+            _dbSet.Update(entity);
         }
 
     }

@@ -2,6 +2,7 @@
 using CarBook.Application.Features.Mediator.Results.FooterAddressResults;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,16 @@ namespace CarBook.Application.Features.Mediator.Handlers.FooterAddressHandlers
 {
     public class GetFooterAddressQueryHandler : IRequestHandler<GetFooterAddressQuery, List<GetFooterAddressQueryResult>>
     {
-        private readonly IRepository<FooterAddress> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetFooterAddressQueryHandler(IRepository<FooterAddress> repository)
+        public GetFooterAddressQueryHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<GetFooterAddressQueryResult>> Handle(GetFooterAddressQuery request, CancellationToken cancellationToken)
         {
-            var values = await _repository.GetAllAsync();
+            var values = await _unitOfWork.Repository<FooterAddress>().GetAllAsync();
             return values.Select(x=>new GetFooterAddressQueryResult
             {
                 Address = x.Address,

@@ -8,6 +8,7 @@ namespace CarBook.Application.Interfaces
 {
     public interface IRepository<T> where T : class 
     {
+        IQueryable<T> Query();
         Task<List<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
         Task CreateAsync(T entity);

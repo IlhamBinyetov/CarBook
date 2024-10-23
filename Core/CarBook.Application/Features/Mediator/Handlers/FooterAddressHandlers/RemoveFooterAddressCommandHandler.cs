@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.FooterAddresCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,18 @@ namespace CarBook.Application.Features.Mediator.Handlers.FooterAddressHandlers
 {
     public class RemoveFooterAddressCommandHandler : IRequestHandler<RemoveFooterAddressCommand>
     {
-        private readonly IRepository<FooterAddress> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RemoveFooterAddressCommandHandler(IRepository<FooterAddress> repository)
+        public RemoveFooterAddressCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(RemoveFooterAddressCommand request, CancellationToken cancellationToken)
         {
-            var deletedItem =  await _repository.GetByIdAsync(request.Id);
-            if (deletedItem != null) await _repository.RemoveAsync(deletedItem);
+            var deletedItem =  await _unitOfWork.Repository<FooterAddress>().GetByIdAsync(request.Id);
+            if (deletedItem != null) await _unitOfWork.Repository<FooterAddress>().RemoveAsync(deletedItem);
+            _unitOfWork.Commit();
         }
     }
 }
