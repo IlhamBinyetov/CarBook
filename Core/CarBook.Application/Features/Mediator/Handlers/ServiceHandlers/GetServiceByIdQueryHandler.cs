@@ -2,6 +2,7 @@
 using CarBook.Application.Features.Mediator.Results.ServiceResults;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,15 @@ namespace CarBook.Application.Features.Mediator.Handlers.ServiceHandlers
 {
     public class GetServiceByIdQueryHandler : IRequestHandler<GetServiceByIdQuery, GetServiceByIdQueryResult>
     {
-        private readonly IRepository<Service> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetServiceByIdQueryHandler(IRepository<Service> repository)
+        public GetServiceByIdQueryHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<GetServiceByIdQueryResult> Handle(GetServiceByIdQuery request, CancellationToken cancellationToken)
         {
-            var value = await _repository.GetByIdAsync(request.Id);
+            var value = await _unitOfWork.Repository<Service>().GetByIdAsync(request.Id);
             return new GetServiceByIdQueryResult
             {
                 Title = value.Title,

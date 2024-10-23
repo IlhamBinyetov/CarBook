@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.ServiceCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,16 @@ namespace CarBook.Application.Features.Mediator.Handlers.ServiceHandlers
 {
     public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand>
     {
-        private readonly IRepository<Service> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateServiceCommandHandler(IRepository<Service> repository)
+        public CreateServiceCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public async Task Handle(CreateServiceCommand request, CancellationToken cancellationToken)
         {
-            await _repository.CreateAsync(new Service
+            var pricing = _unitOfWork.Repository<Service>().Query().FirstOrDefault(x => x.Title == request.Title);
+            await _unitOfWork.Repository<Service>().CreateAsync(new Service
             {
                 IconUrl = request.IconUrl,
                 Title = request.Title,
