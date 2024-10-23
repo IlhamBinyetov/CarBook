@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.PricingCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,22 @@ namespace CarBook.Application.Features.Mediator.Handlers.PricingHandlers
 {
     public class CreatePricingCommandHandler : IRequestHandler<CreatePricingCommand>
     {
-        private readonly IRepository<Pricing> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreatePricingCommandHandler(IRepository<Pricing> repository)
+        public CreatePricingCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
+
         public async Task Handle(CreatePricingCommand request, CancellationToken cancellationToken)
         {
-            await _repository.CreateAsync(new Pricing
+            var pricing =  _unitOfWork.Repository<Pricing>().Query().FirstOrDefault(x => x.Name == request.Name);
+            await _unitOfWork.Repository<Pricing>().CreateAsync(new Pricing
             {
                 Name = request.Name
                 
             });
+            _unitOfWork.Commit();
         }
     }
 }

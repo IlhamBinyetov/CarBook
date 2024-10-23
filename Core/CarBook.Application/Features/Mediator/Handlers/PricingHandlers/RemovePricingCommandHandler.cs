@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.PricingCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,17 @@ namespace CarBook.Application.Features.Mediator.Handlers.PricingHandlers
 {
     public class RemoveServiceCommandHandler : IRequestHandler<RemovePricingCommand>
     {
-        private readonly IRepository<Pricing> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RemoveServiceCommandHandler(IRepository<Pricing> repository)
+        public RemoveServiceCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public async Task Handle(RemovePricingCommand request, CancellationToken cancellationToken)
         {
-            var deletedItem = await _repository.GetByIdAsync(request.Id);
-            await _repository.RemoveAsync(deletedItem);
+            var deletedItem = await _unitOfWork.Repository<Pricing>().GetByIdAsync(request.Id);
+            await _unitOfWork.Repository<Pricing>().RemoveAsync(deletedItem);
+            _unitOfWork.Commit();
         }
     }
 }

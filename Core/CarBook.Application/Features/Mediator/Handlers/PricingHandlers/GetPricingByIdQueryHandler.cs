@@ -3,6 +3,7 @@ using CarBook.Application.Features.Mediator.Results.LocationResults;
 using CarBook.Application.Features.Mediator.Results.PricingResults;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -14,15 +15,15 @@ namespace CarBook.Application.Features.Mediator.Handlers.PricingHandlers
 {
     public class GetPricingByIdQueryHandler : IRequestHandler<GetPricingByIdQuery, GetPricingByIdQueryResult>
     {
-        private readonly IRepository<Pricing> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetPricingByIdQueryHandler(IRepository<Pricing> repository)
+        public GetPricingByIdQueryHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<GetPricingByIdQueryResult> Handle(GetPricingByIdQuery request, CancellationToken cancellationToken)
         {
-            var value = await _repository.GetByIdAsync(request.Id);
+            var value = await _unitOfWork.Repository<Pricing>().GetByIdAsync(request.Id);
             return new GetPricingByIdQueryResult
             {
                 Name = value.Name,
