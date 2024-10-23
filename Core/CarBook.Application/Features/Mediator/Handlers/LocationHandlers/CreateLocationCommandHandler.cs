@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.LocationCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,22 @@ namespace CarBook.Application.Features.Mediator.Handlers.LocationHandlers
 {
     public class CreateLocationCommandHandler : IRequestHandler<CreateLocationCommand>
     {
-        private readonly IRepository<Location> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateLocationCommandHandler(IRepository<Location> repository)
+        public CreateLocationCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
+
         public async Task Handle(CreateLocationCommand request, CancellationToken cancellationToken)
         {
-            await _repository.CreateAsync(new Location
+            var location =  _unitOfWork.Repository<Location>().Query().FirstOrDefault(x=>x.Name == request.Name);
+            await _unitOfWork.Repository<Location>().CreateAsync(new Location
             {
                 Name = request.Name
 
             });
+            _unitOfWork.Commit();
         }
     }
 }

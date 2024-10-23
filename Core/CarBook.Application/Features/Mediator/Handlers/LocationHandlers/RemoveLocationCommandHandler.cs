@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.LocationCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,18 @@ namespace CarBook.Application.Features.Mediator.Handlers.LocationHandlers
 {
     public class RemoveLocationCommandHandler : IRequestHandler<RemoveLocationCommand>
     {
-        private readonly IRepository<Location> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RemoveLocationCommandHandler(IRepository<Location> repository)
+        public RemoveLocationCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
+
         public async Task Handle(RemoveLocationCommand request, CancellationToken cancellationToken)
         {
-            var deletedItem = await _repository.GetByIdAsync(request.Id);
-            await _repository.RemoveAsync(deletedItem);
+            var deletedItem = await _unitOfWork.Repository<Location>().GetByIdAsync(request.Id);
+            await _unitOfWork.Repository<Location>().RemoveAsync(deletedItem);
+            _unitOfWork.Commit();
 
         }
     }

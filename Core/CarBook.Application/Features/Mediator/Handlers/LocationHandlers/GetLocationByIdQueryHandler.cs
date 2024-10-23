@@ -2,6 +2,7 @@
 using CarBook.Application.Features.Mediator.Results.LocationResults;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,16 @@ namespace CarBook.Application.Features.Mediator.Handlers.LocationHandlers
 {
     public class GetLocationByIdQueryHandler : IRequestHandler<GetLocationByIdQuery, GetLocationByIdQueryResult>
     {
-        private readonly IRepository<Location> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetLocationByIdQueryHandler(IRepository<Location> repository)
+        public GetLocationByIdQueryHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<GetLocationByIdQueryResult> Handle(GetLocationByIdQuery request, CancellationToken cancellationToken)
         {
-            var value = await _repository.GetByIdAsync(request.Id);
+            var value = await _unitOfWork.Repository<Location>().GetByIdAsync(request.Id);
             return new GetLocationByIdQueryResult
             {
                 LocationId = value.LocationId,
