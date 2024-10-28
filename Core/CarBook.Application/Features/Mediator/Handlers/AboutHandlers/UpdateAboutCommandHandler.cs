@@ -20,14 +20,6 @@ namespace CarBook.Application.Features.CQRS.Handlers.AboutHandlers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(UpdateAboutCommand command)
-        {
-            var value = await _repository.GetByIdAsync(command.AboutId);
-            value.Description = command.Description;
-            value.Title = command.Title;
-            value.ImageUrl = command.ImageUrl;
-        }
-
         public async Task Handle(UpdateAboutCommand request, CancellationToken cancellationToken)
         {
             var updatedItem = await _unitOfWork.Repository<About>().GetByIdAsync(request.AboutId);

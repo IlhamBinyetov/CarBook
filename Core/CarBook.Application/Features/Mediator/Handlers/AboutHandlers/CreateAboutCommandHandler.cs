@@ -1,5 +1,4 @@
 ﻿using CarBook.Application.Abstractions.UnitOfWork;
-using CarBook.Application.Features.CQRS.Commands.AboutCommands;
 using CarBook.Application.Features.Mediator.Commands.AboutCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;

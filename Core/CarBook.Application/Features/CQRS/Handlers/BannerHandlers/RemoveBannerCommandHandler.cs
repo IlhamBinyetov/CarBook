@@ -1,5 +1,4 @@
-﻿using CarBook.Application.Features.CQRS.Commands.AboutCommands;
-using CarBook.Application.Features.CQRS.Commands.BannerCommands;
+﻿using CarBook.Application.Features.CQRS.Commands.BannerCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using System;

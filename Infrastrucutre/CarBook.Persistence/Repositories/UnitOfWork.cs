@@ -1,6 +1,6 @@
-﻿using CarBook.Application.Interfaces;
+﻿using CarBook.Application.Abstractions.UnitOfWork;
+using CarBook.Application.Interfaces;
 using CarBook.Persistence.Context;
-using CarBook.Persistence.Context.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;

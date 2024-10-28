@@ -24,15 +24,6 @@ namespace CarBook.Application.Extensions
                 throw new ArgumentNullException(nameof(services));
             }
 
-            
-            //About Services
-            services.AddScoped<GetAboutByIdQueryHandler>();
-            services.AddScoped<GetAboutQueryHandler>();
-            services.AddScoped<RemoveAboutCommandHandler>();
-            services.AddScoped<UpdateAboutCommandHandler>();
-            services.AddScoped<CreateAboutCommandHandler>();
-
-
 
             //Banner Services
             services.AddScoped<GetBannerByIdQueryHandler>();
