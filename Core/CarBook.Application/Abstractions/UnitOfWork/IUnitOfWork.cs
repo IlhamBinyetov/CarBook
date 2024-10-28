@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Persistence.Context.UnitOfWork
+namespace CarBook.Application.Abstractions.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -3,7 +3,7 @@ using CarBook.Application.Features.Mediator.Results.ServiceResults;
 using CarBook.Application.Features.Mediator.Results.SocialMediaResults;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
-using CarBook.Persistence.Context.UnitOfWork;
+using CarBook.Application.Abstractions.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;

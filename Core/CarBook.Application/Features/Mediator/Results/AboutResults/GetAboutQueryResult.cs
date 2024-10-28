@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Features.CQRS.Results.AboutResults
+namespace CarBook.Application.Features.Mediator.Results.AboutResults
 {
-    public  class GetAboutByIdResult
+    public class GetAboutQueryResult
     {
         public int AboutId { get; set; }
         public string Title { get; set; }

@@ -1,9 +1,8 @@
 ﻿using CarBook.Application.Features.Mediator.Queries.PricingQueries;
-using CarBook.Application.Features.Mediator.Results.LocationResults;
 using CarBook.Application.Features.Mediator.Results.PricingResults;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
-using CarBook.Persistence.Context.UnitOfWork;
+using CarBook.Application.Abstractions.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;

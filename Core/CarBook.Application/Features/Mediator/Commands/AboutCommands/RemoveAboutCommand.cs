@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Features.CQRS.Commands.AboutCommands
+namespace CarBook.Application.Features.Mediator.AboutCommands
 {
-    public class RemoveAboutCommand
+    public class RemoveAboutCommand : IRequest
     {
     
         public int Id { get; set; }

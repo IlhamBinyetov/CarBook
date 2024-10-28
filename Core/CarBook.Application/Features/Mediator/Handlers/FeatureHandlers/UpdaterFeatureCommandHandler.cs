@@ -1,13 +1,13 @@
 ﻿using CarBook.Application.Features.Mediator.Commands.FeatureCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
-using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CarBook.Application.Abstractions.UnitOfWork;
 
 namespace CarBook.Application.Features.Mediator.Handlers.FeatureHandlers
 {

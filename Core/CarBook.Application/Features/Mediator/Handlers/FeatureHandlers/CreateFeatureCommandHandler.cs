@@ -1,7 +1,7 @@
-﻿using CarBook.Application.Features.Mediator.Commands.FeatureCommands;
+﻿using CarBook.Application.Abstractions.UnitOfWork;
+using CarBook.Application.Features.Mediator.Commands.FeatureCommands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
-using CarBook.Persistence.Context.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
